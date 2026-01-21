@@ -44,9 +44,8 @@ export function ShareButton() {
       </button>
 
       {isOpen && (
-        <>
-          <div className="share-backdrop" onClick={handleClose} />
-          <div className="share-modal">
+        <div className="modal-overlay" onClick={handleClose}>
+          <div className="modal-content share-modal" onClick={e => e.stopPropagation()}>
             <div className="share-header">
               <h3>Share "{currentOrgName}"</h3>
               <p>Anyone with this link can view a copy of your org</p>
@@ -77,7 +76,7 @@ export function ShareButton() {
               Done
             </button>
           </div>
-        </>
+        </div>
       )}
     </>
   );

@@ -1598,41 +1598,11 @@ body::before {
   color: var(--text-primary);
 }
 
-.share-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
-  animation: fadeIn var(--transition-fast);
-}
-
-.share-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
+.modal-overlay .share-modal {
   max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-xl);
   padding: var(--space-xl);
-  z-index: 1001;
-  animation: modalSlideIn var(--transition-normal);
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
+  margin: auto;
+  position: relative;
 }
 
 .share-header {
@@ -1966,30 +1936,30 @@ body::before {
    ============================================ */
 .welcome-toast {
   position: fixed;
-  bottom: var(--space-lg);
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   display: flex;
   align-items: flex-start;
   gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-lg) var(--space-xl);
   background: var(--bg-elevated);
   border: 1px solid var(--accent-primary);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg), 0 0 20px rgba(0, 217, 255, 0.15);
+  box-shadow: var(--shadow-xl), 0 0 30px rgba(0, 217, 255, 0.2);
   z-index: 900;
   max-width: 450px;
-  animation: toastSlideUp 0.4s ease;
+  animation: toastFadeIn 0.4s ease;
 }
 
-@keyframes toastSlideUp {
+@keyframes toastFadeIn {
   from {
     opacity: 0;
-    transform: translateX(-50%) translateY(20px);
+    transform: translate(-50%, -50%) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
