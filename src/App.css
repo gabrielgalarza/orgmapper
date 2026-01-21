@@ -2,49 +2,72 @@
  * Org Mapper Styles
  * 
  * Design philosophy:
- * - Dark, sophisticated palette inspired by terminal/IDE aesthetics
- * - Clear visual hierarchy through spacing and subtle color shifts
- * - Smooth micro-interactions for professional feel
- * - Typography: JetBrains Mono for that tech-forward look
+ * - Amplitude brand colors
+ * - Clean, professional interface
+ * - Mobile-first responsive design
  */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* ============================================
-   CSS Variables - Design Tokens
+   CSS Variables - Amplitude Brand Colors
    ============================================ */
 :root {
-  /* Core palette - deep navy/slate */
-  --bg-primary: #0a0e14;
-  --bg-secondary: #0f1419;
-  --bg-tertiary: #151b23;
-  --bg-elevated: #1a212c;
+  /* Amplitude Core Colors */
+  --amp-blue: #0052F2;
+  --amp-black: #000000;
+  --amp-white: #FFFFFF;
+  
+  /* Amplitude Accent Colors */
+  --amp-dark-blue: #001A4F;
+  --amp-lilac: #6980FF;
+  --amp-violet: #A373FF;
+  --amp-pink: #FF7D78;
+  --amp-red: #F23845;
+  
+  /* Amplitude Grays */
+  --gray-100: #13171A;
+  --gray-90: #242A2E;
+  --gray-80: #373D42;
+  --gray-70: #50565B;
+  --gray-60: #697077;
+  --gray-50: #868D95;
+  --gray-40: #9FA5AD;
+  --gray-30: #B9BFC7;
+  --gray-20: #D5D9E0;
+  --gray-10: #F2F4F8;
+  
+  /* Semantic mappings */
+  --bg-primary: var(--gray-100);
+  --bg-secondary: var(--gray-90);
+  --bg-tertiary: var(--gray-80);
+  --bg-elevated: var(--gray-90);
   
   /* Surfaces */
-  --surface-1: #1e2630;
-  --surface-2: #252f3c;
-  --surface-3: #2d3846;
+  --surface-1: var(--gray-80);
+  --surface-2: var(--gray-70);
+  --surface-3: var(--gray-60);
   
   /* Accent colors */
-  --accent-primary: #00d9ff;
-  --accent-secondary: #7c3aed;
+  --accent-primary: var(--amp-blue);
+  --accent-secondary: var(--amp-violet);
   --accent-success: #10b981;
   --accent-warning: #f59e0b;
-  --accent-danger: #ef4444;
+  --accent-danger: var(--amp-red);
   
   /* Text */
-  --text-primary: #e6edf3;
-  --text-secondary: #8b949e;
-  --text-muted: #6e7681;
-  --text-accent: var(--accent-primary);
+  --text-primary: var(--amp-white);
+  --text-secondary: var(--gray-30);
+  --text-muted: var(--gray-50);
+  --text-accent: var(--amp-lilac);
   
   /* Borders */
-  --border-subtle: rgba(139, 148, 158, 0.1);
-  --border-default: rgba(139, 148, 158, 0.2);
-  --border-prominent: rgba(139, 148, 158, 0.3);
+  --border-subtle: rgba(105, 128, 255, 0.1);
+  --border-default: rgba(105, 128, 255, 0.2);
+  --border-prominent: rgba(105, 128, 255, 0.3);
   
   /* Effects */
-  --glow-primary: 0 0 20px rgba(0, 217, 255, 0.15);
+  --glow-primary: 0 0 20px rgba(0, 82, 242, 0.25);
   --glow-success: 0 0 20px rgba(16, 185, 129, 0.15);
   
   /* Spacing scale */
@@ -56,8 +79,8 @@
   --space-2xl: 48px;
   
   /* Typography */
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Consolas', monospace;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   
   /* Transitions */
   --transition-fast: 120ms ease;
@@ -107,7 +130,7 @@ body {
   z-index: 1;
 }
 
-/* Background pattern */
+/* Background pattern - Amplitude brand */
 body::before {
   content: '';
   position: fixed;
@@ -116,8 +139,8 @@ body::before {
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(ellipse at 20% 0%, rgba(0, 217, 255, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(124, 58, 237, 0.03) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 0%, rgba(0, 82, 242, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(163, 115, 255, 0.05) 0%, transparent 50%);
   pointer-events: none;
   z-index: -1;
 }
@@ -1319,36 +1342,376 @@ body::before {
 }
 
 /* ============================================
-   Responsive
+   Responsive - Tablet
+   ============================================ */
+@media (max-width: 1024px) {
+  .teams-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================
+   Responsive - Mobile
    ============================================ */
 @media (max-width: 768px) {
+  :root {
+    --space-lg: 16px;
+    --space-xl: 24px;
+  }
+
+  /* Main layout */
   .main-content {
-    padding: var(--space-md);
+    padding: var(--space-sm);
   }
 
   .teams-grid {
     grid-template-columns: 1fr;
+    gap: var(--space-md);
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
+  /* Header - Mobile */
+  .app-header {
+    padding: var(--space-sm) var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
   }
 
-  .modal-content {
-    max-width: 100%;
-    margin: var(--space-md);
+  .header-left {
+    gap: var(--space-sm);
+    flex: 1;
+    min-width: 0;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
   }
 
-  .person-detail-panel {
-    max-width: 100%;
+  .logo svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .header-title h1 {
+    font-size: 1rem;
+  }
+
+  .header-actions {
+    gap: var(--space-xs);
   }
 
   .header-actions span {
     display: none;
   }
 
+  .btn-primary {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.75rem;
+  }
+
+  .btn-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Org Switcher - Mobile */
+  .org-switcher {
+    margin-left: 0;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .org-switcher-trigger {
+    padding: var(--space-xs);
+    font-size: 0.75rem;
+  }
+
   .org-name-display {
-    max-width: 100px;
+    max-width: 80px;
+  }
+
+  .org-switcher-dropdown {
+    min-width: 200px;
+    left: auto;
+    right: 0;
+  }
+
+  /* Team Section - Mobile */
+  .team-section {
+    padding: var(--space-sm);
+  }
+
+  .team-header {
+    padding: var(--space-sm);
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .team-title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .team-name-display {
+    font-size: 0.875rem;
+  }
+
+  .team-count {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+  }
+
+  .team-products {
+    padding: var(--space-xs) var(--space-sm);
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .product-badge {
+    width: 24px;
+    height: 24px;
+  }
+
+  .product-badge svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .team-actions {
+    gap: var(--space-xs);
+  }
+
+  .add-person-btn,
+  .delete-team-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* Person Card - Mobile */
+  .person-card {
+    padding: var(--space-sm);
+  }
+
+  .person-info h4 {
+    font-size: 0.875rem;
+  }
+
+  .person-role {
+    font-size: 0.7rem;
+  }
+
+  .person-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+  }
+
+  .person-actions {
+    gap: 4px;
+  }
+
+  .person-actions button {
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+  }
+
+  /* Modals - Mobile */
+  .modal-overlay {
+    padding: var(--space-sm);
+    align-items: flex-start;
+    padding-top: 10vh;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    max-height: 85vh;
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+  }
+
+  .modal-header {
+    padding-bottom: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .modal-header h2 {
+    font-size: 1.125rem;
+  }
+
+  .modal-body {
+    padding: var(--space-sm) 0;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group label {
+    font-size: 0.75rem;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-size: 0.875rem;
+    padding: var(--space-sm);
+  }
+
+  .modal-footer {
+    padding-top: var(--space-sm);
+    gap: var(--space-sm);
+  }
+
+  .modal-footer button {
+    flex: 1;
+    padding: var(--space-sm);
+    font-size: 0.875rem;
+  }
+
+  /* Person Detail - Mobile */
+  .person-detail-panel {
+    position: fixed;
+    inset: 0;
+    max-width: 100%;
+    width: 100%;
+    border-radius: 0;
+    z-index: 250;
+  }
+
+  .detail-header {
+    padding: var(--space-md);
+  }
+
+  .detail-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 1.25rem;
+  }
+
+  .detail-name {
+    font-size: 1.125rem;
+  }
+
+  .detail-role,
+  .detail-email {
+    font-size: 0.8125rem;
+  }
+
+  .detail-section {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .detail-section h4 {
+    font-size: 0.75rem;
+  }
+
+  .tag-btn {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+
+  /* Share Modal - Mobile */
+  .share-modal {
+    width: 95%;
+    max-width: 100%;
+    padding: var(--space-md);
+  }
+
+  .share-link-display {
+    font-size: 0.75rem;
+    padding: var(--space-sm);
+  }
+
+  /* Welcome Toast - Mobile */
+  .welcome-toast {
+    width: 90%;
+    max-width: 90%;
+    padding: var(--space-sm) var(--space-md);
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .toast-content p {
+    font-size: 0.8125rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Org Settings - Mobile */
+  .product-access-list {
+    gap: var(--space-sm);
+  }
+
+  .product-access-item {
+    padding: var(--space-sm);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .product-info {
+    gap: var(--space-sm);
+  }
+
+  .product-info h4 {
+    font-size: 0.875rem;
+  }
+
+  .product-info p {
+    font-size: 0.75rem;
+  }
+
+  .toggle-switch {
+    align-self: flex-end;
+  }
+
+  /* Add Team Form - Mobile */
+  .add-team-form {
+    flex-direction: column;
+  }
+
+  .add-team-form input {
+    width: 100%;
+  }
+
+  .add-team-form button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Delete Team - Mobile */
+  .delete-team-btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+/* ============================================
+   Responsive - Small Mobile
+   ============================================ */
+@media (max-width: 375px) {
+  .header-title h1 {
+    display: none;
+  }
+
+  .org-name-display {
+    max-width: 60px;
+  }
+
+  .team-name-display {
+    font-size: 0.8125rem;
+  }
+
+  .person-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.7rem;
+  }
+
+  .person-info h4 {
+    font-size: 0.8125rem;
   }
 }
 

@@ -6,54 +6,54 @@
 
 import type { OrgState, TeamType, Team, Person, AmplitudeProduct } from '../types';
 
-// Team definitions with distinctive colors
+// Team definitions with Amplitude brand colors
 const teams: Record<TeamType, Team> = {
   executive: {
     id: 'executive',
     name: 'Executive',
-    color: '#1a1a2e',
+    color: '#001A4F', // Amplitude Dark Blue
     personIds: ['p1'],
     products: [],
   },
   product: {
     id: 'product',
     name: 'Product',
-    color: '#16213e',
+    color: '#0052F2', // Amplitude Blue
     personIds: ['p2', 'p3', 'p4'],
     products: ['analytics', 'experiment', 'session-replay'],
   },
   engineering: {
     id: 'engineering',
     name: 'Engineering',
-    color: '#0f3460',
+    color: '#6980FF', // Amplitude Lilac
     personIds: ['p5', 'p6', 'p7', 'p8'],
     products: ['analytics', 'session-replay'],
   },
   'data-science': {
     id: 'data-science',
     name: 'Data Science',
-    color: '#1a1a40',
+    color: '#A373FF', // Amplitude Violet
     personIds: ['p9', 'p10'],
     products: ['analytics', 'experiment'],
   },
   sales: {
     id: 'sales',
     name: 'Sales',
-    color: '#2d132c',
+    color: '#FF7D78', // Amplitude Pink
     personIds: ['p11', 'p12'],
     products: [],
   },
   marketing: {
     id: 'marketing',
     name: 'Marketing',
-    color: '#1e1e2f',
+    color: '#F23845', // Amplitude Red
     personIds: ['p13'],
     products: ['analytics', 'guides-surveys'],
   },
   operations: {
     id: 'operations',
     name: 'Operations',
-    color: '#252836',
+    color: '#50565B', // Amplitude Gray 70
     personIds: ['p14'],
     products: [],
   },
@@ -212,16 +212,16 @@ export const generateId = (): string => {
   return `p${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 };
 
-// Create an empty org state (for new orgs)
+// Create an empty org state (for new orgs) with Amplitude brand colors
 export const createEmptyOrgState = (): OrgState => ({
   teams: {
-    executive: { id: 'executive', name: 'Executive', color: '#1a1a2e', personIds: [], products: [] },
-    product: { id: 'product', name: 'Product', color: '#16213e', personIds: [], products: [] },
-    engineering: { id: 'engineering', name: 'Engineering', color: '#0f3460', personIds: [], products: [] },
-    'data-science': { id: 'data-science', name: 'Data Science', color: '#1a1a40', personIds: [], products: [] },
-    sales: { id: 'sales', name: 'Sales', color: '#2d132c', personIds: [], products: [] },
-    marketing: { id: 'marketing', name: 'Marketing', color: '#1e1e2f', personIds: [], products: [] },
-    operations: { id: 'operations', name: 'Operations', color: '#252836', personIds: [], products: [] },
+    executive: { id: 'executive', name: 'Executive', color: '#001A4F', personIds: [], products: [] },
+    product: { id: 'product', name: 'Product', color: '#0052F2', personIds: [], products: [] },
+    engineering: { id: 'engineering', name: 'Engineering', color: '#6980FF', personIds: [], products: [] },
+    'data-science': { id: 'data-science', name: 'Data Science', color: '#A373FF', personIds: [], products: [] },
+    sales: { id: 'sales', name: 'Sales', color: '#FF7D78', personIds: [], products: [] },
+    marketing: { id: 'marketing', name: 'Marketing', color: '#F23845', personIds: [], products: [] },
+    operations: { id: 'operations', name: 'Operations', color: '#50565B', personIds: [], products: [] },
   },
   people: {},
   orgProducts: [],

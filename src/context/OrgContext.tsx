@@ -456,7 +456,8 @@ export function OrgProvider({ children }: { children: ReactNode }) {
 
   // Generate a random color for new teams
   const getRandomColor = () => {
-    const colors = ['#1a1a2e', '#16213e', '#0f3460', '#1a1a40', '#2d132c', '#1e1e2f', '#252836', '#1f2937', '#374151', '#1e3a5f'];
+    // Amplitude brand colors
+    const colors = ['#001A4F', '#0052F2', '#6980FF', '#A373FF', '#FF7D78', '#F23845', '#50565B', '#373D42', '#242A2E'];
     return colors[Math.floor(Math.random() * colors.length)];
   };
 
