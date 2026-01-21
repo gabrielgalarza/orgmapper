@@ -1150,6 +1150,107 @@ body::before {
   text-decoration: underline;
 }
 
+/* Editable fields in person detail */
+.editable {
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.editable .edit-icon {
+  opacity: 0;
+  color: var(--text-muted);
+  transition: opacity var(--transition-fast);
+}
+
+.editable:hover .edit-icon {
+  opacity: 1;
+}
+
+.editable:hover {
+  color: var(--accent-primary);
+}
+
+.editable-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.editable-field input {
+  background: var(--surface-1);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.edit-name-input {
+  font-size: 1.25rem;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+}
+
+.edit-role-input {
+  font-size: 0.875rem;
+  width: 100%;
+  text-align: center;
+}
+
+.edit-email-input {
+  font-size: 0.8125rem;
+  flex: 1;
+}
+
+.email-field {
+  width: 100%;
+  color: var(--accent-primary);
+}
+
+.email-field svg {
+  flex-shrink: 0;
+}
+
+.edit-level-select {
+  background: var(--surface-1);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-full);
+  padding: var(--space-xs) var(--space-sm);
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+}
+
+.detail-email.editable {
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+  font-family: var(--font-sans);
+}
+
+.detail-email.editable:hover {
+  text-decoration: none;
+}
+
+.meta-badge.editable {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-badge.editable:hover {
+  background: var(--surface-2);
+  color: var(--accent-primary);
+}
+
 .detail-section {
   padding: var(--space-md) var(--space-lg);
   border-top: 1px solid var(--border-subtle);

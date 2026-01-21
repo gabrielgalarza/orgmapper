@@ -5,7 +5,7 @@
  * Shows full information, reporting structure, and allows quick edits.
  */
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { 
   X, 
   Mail, 
@@ -17,7 +17,8 @@ import {
   Crown,
   Users,
   AlertTriangle,
-  ChevronDown
+  ChevronDown,
+  Pencil
 } from 'lucide-react';
 import type { Person, PersonTag, RoleLevel } from '../types';
 import { useOrg } from '../context/OrgContext';
@@ -43,6 +44,8 @@ const levelLabels: Record<RoleLevel, string> = {
   ic: 'Individual Contributor',
 };
 
+const levelOptions: RoleLevel[] = ['executive', 'vp', 'director', 'manager', 'ic'];
+
 export function PersonDetail({ person, onClose }: PersonDetailProps) {
   const { 
     getPersonById, 
@@ -52,17 +55,77 @@ export function PersonDetail({ person, onClose }: PersonDetailProps) {
     toggleTag,
     setReportsTo,
     movePerson,
+    updatePerson,
     state
   } = useOrg();
   
   const [isEditingManager, setIsEditingManager] = useState(false);
   const [isEditingTeam, setIsEditingTeam] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  
+  // Edit states for person details
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [isEditingRole, setIsEditingRole] = useState(false);
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [isEditingLevel, setIsEditingLevel] = useState(false);
+  
+  const [editName, setEditName] = useState(person.name);
+  const [editRole, setEditRole] = useState(person.role);
+  const [editEmail, setEditEmail] = useState(person.email || '');
+  const [editLevel, setEditLevel] = useState(person.level);
+  
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const roleInputRef = useRef<HTMLInputElement>(null);
+  const emailInputRef = useRef<HTMLInputElement>(null);
+
+  // Focus input when editing starts
+  useEffect(() => {
+    if (isEditingName && nameInputRef.current) nameInputRef.current.focus();
+  }, [isEditingName]);
+  
+  useEffect(() => {
+    if (isEditingRole && roleInputRef.current) roleInputRef.current.focus();
+  }, [isEditingRole]);
+  
+  useEffect(() => {
+    if (isEditingEmail && emailInputRef.current) emailInputRef.current.focus();
+  }, [isEditingEmail]);
 
   const manager = person.reportsTo ? getPersonById(person.reportsTo) : null;
   const directReports = getDirectReports(person.id);
   const teams = getTeamList();
   const currentTeam = state.teams[person.teamId];
+  
+  // Save handlers
+  const saveName = () => {
+    if (editName.trim() && editName !== person.name) {
+      updatePerson(person.id, { name: editName.trim() });
+    }
+    setIsEditingName(false);
+  };
+  
+  const saveRole = () => {
+    if (editRole.trim() && editRole !== person.role) {
+      updatePerson(person.id, { role: editRole.trim() });
+    }
+    setIsEditingRole(false);
+  };
+  
+  const saveEmail = () => {
+    const newEmail = editEmail.trim() || undefined;
+    if (newEmail !== person.email) {
+      updatePerson(person.id, { email: newEmail });
+    }
+    setIsEditingEmail(false);
+  };
+  
+  const handleLevelChange = (newLevel: RoleLevel) => {
+    if (newLevel !== person.level) {
+      updatePerson(person.id, { level: newLevel });
+    }
+    setEditLevel(newLevel);
+    setIsEditingLevel(false);
+  };
   
   // Get initials for avatar
   const initials = person.name
@@ -106,18 +169,126 @@ export function PersonDetail({ person, onClose }: PersonDetailProps) {
         {/* Profile */}
         <div className="detail-profile">
           <div className="detail-avatar">{initials}</div>
-          <h2 className="detail-name">{person.name}</h2>
-          <p className="detail-role">{person.role}</p>
           
+          {/* Editable Name */}
+          {isEditingName ? (
+            <div className="editable-field">
+              <input
+                ref={nameInputRef}
+                type="text"
+                value={editName}
+                onChange={e => setEditName(e.target.value)}
+                onBlur={saveName}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') saveName();
+                  if (e.key === 'Escape') {
+                    setEditName(person.name);
+                    setIsEditingName(false);
+                  }
+                }}
+                className="edit-name-input"
+              />
+            </div>
+          ) : (
+            <h2 
+              className="detail-name editable" 
+              onClick={() => setIsEditingName(true)}
+              title="Click to edit name"
+            >
+              {person.name}
+              <Pencil size={14} className="edit-icon" />
+            </h2>
+          )}
+          
+          {/* Editable Role */}
+          {isEditingRole ? (
+            <div className="editable-field">
+              <input
+                ref={roleInputRef}
+                type="text"
+                value={editRole}
+                onChange={e => setEditRole(e.target.value)}
+                onBlur={saveRole}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') saveRole();
+                  if (e.key === 'Escape') {
+                    setEditRole(person.role);
+                    setIsEditingRole(false);
+                  }
+                }}
+                className="edit-role-input"
+              />
+            </div>
+          ) : (
+            <p 
+              className="detail-role editable" 
+              onClick={() => setIsEditingRole(true)}
+              title="Click to edit role"
+            >
+              {person.role}
+              <Pencil size={12} className="edit-icon" />
+            </p>
+          )}
+          
+          {/* Editable Level */}
           <div className="detail-meta">
-            <span className="meta-badge">{levelLabels[person.level]}</span>
+            {isEditingLevel ? (
+              <select
+                value={editLevel}
+                onChange={e => handleLevelChange(e.target.value as RoleLevel)}
+                onBlur={() => setIsEditingLevel(false)}
+                autoFocus
+                className="edit-level-select"
+              >
+                {levelOptions.map(level => (
+                  <option key={level} value={level}>
+                    {levelLabels[level]}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <span 
+                className="meta-badge editable" 
+                onClick={() => setIsEditingLevel(true)}
+                title="Click to change level"
+              >
+                {levelLabels[person.level]}
+                <Pencil size={10} className="edit-icon" />
+              </span>
+            )}
           </div>
 
-          {person.email && (
-            <a href={`mailto:${person.email}`} className="detail-email">
+          {/* Editable Email */}
+          {isEditingEmail ? (
+            <div className="editable-field email-field">
               <Mail size={14} />
-              {person.email}
-            </a>
+              <input
+                ref={emailInputRef}
+                type="email"
+                value={editEmail}
+                onChange={e => setEditEmail(e.target.value)}
+                onBlur={saveEmail}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') saveEmail();
+                  if (e.key === 'Escape') {
+                    setEditEmail(person.email || '');
+                    setIsEditingEmail(false);
+                  }
+                }}
+                placeholder="Add email..."
+                className="edit-email-input"
+              />
+            </div>
+          ) : (
+            <button 
+              className="detail-email editable"
+              onClick={() => setIsEditingEmail(true)}
+              title="Click to edit email"
+            >
+              <Mail size={14} />
+              {person.email || 'Add email...'}
+              <Pencil size={12} className="edit-icon" />
+            </button>
           )}
         </div>
 
