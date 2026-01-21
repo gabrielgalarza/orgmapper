@@ -1603,7 +1603,7 @@ body::before {
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
-  z-index: 500;
+  z-index: 1000;
   animation: fadeIn var(--transition-fast);
 }
 
@@ -1614,11 +1614,13 @@ body::before {
   transform: translate(-50%, -50%);
   width: 90%;
   max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
   background: var(--bg-secondary);
   border: 1px solid var(--border-default);
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
-  z-index: 501;
+  z-index: 1001;
   animation: modalSlideIn var(--transition-normal);
 }
 
@@ -1956,6 +1958,98 @@ body::before {
 
 .btn-cancel:hover {
   background: var(--surface-2);
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Welcome Toast
+   ============================================ */
+.welcome-toast {
+  position: fixed;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--accent-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(0, 217, 255, 0.15);
+  z-index: 900;
+  max-width: 450px;
+  animation: toastSlideUp 0.4s ease;
+}
+
+@keyframes toastSlideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.welcome-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 217, 255, 0.15);
+  border-radius: var(--radius-md);
+  color: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.welcome-content {
+  flex: 1;
+}
+
+.welcome-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.welcome-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.welcome-text svg {
+  color: var(--accent-primary);
+}
+
+.welcome-text strong {
+  color: var(--accent-primary);
+}
+
+.welcome-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.welcome-close:hover {
+  background: var(--surface-1);
   color: var(--text-primary);
 }
 

@@ -7,3 +7,4 @@ export { Header } from './Header';
 export { OrgSwitcher } from './OrgSwitcher';
 export { ShareButton } from './ShareButton';
 export { OrgSettings } from './OrgSettings';
+export { WelcomeToast } from './WelcomeToast';

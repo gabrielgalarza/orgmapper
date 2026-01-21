@@ -8,7 +8,7 @@
 import { useState, useEffect, Component } from 'react';
 import type { ReactNode } from 'react';
 import { OrgProvider, useOrg } from './context/OrgContext';
-import { OrgBoard, Header, AddPersonModal, OrgSettings } from './components';
+import { OrgBoard, Header, AddPersonModal, OrgSettings, WelcomeToast } from './components';
 import { getSharedOrgFromUrl, clearUrlParams } from './utils/shareUtils';
 import './App.css';
 
@@ -102,6 +102,7 @@ function AppContent() {
   return (
     <div className="app">
       <SharedOrgLoader />
+      <WelcomeToast />
       <Header 
         onAddPerson={() => setIsAddModalOpen(true)} 
         onOpenSettings={() => setIsSettingsOpen(true)}
