@@ -81,12 +81,12 @@ export function AddPersonModal({ isOpen, onClose, defaultTeam }: AddPersonModalP
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name.trim() || !formData.email.trim() || !formData.teamId) return;
+    if (!formData.name.trim() || !formData.teamId) return;
 
     addPerson({
       name: formData.name.trim(),
       role: formData.role.trim() || 'Team Member', // Default role if not provided
-      email: formData.email.trim(),
+      email: formData.email.trim() || undefined,
       teamId: formData.teamId,
       level: formData.level,
       tags: formData.tags,
@@ -135,16 +135,15 @@ export function AddPersonModal({ isOpen, onClose, defaultTeam }: AddPersonModalP
             />
           </div>
 
-          {/* Email - Required */}
+          {/* Email - Optional */}
           <div className="form-group">
-            <label htmlFor="email">Email *</label>
+            <label htmlFor="email">Email</label>
             <input
               id="email"
               type="email"
               value={formData.email}
               onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
               placeholder="email@company.com"
-              required
             />
           </div>
 

@@ -71,7 +71,7 @@ export function PersonDetail({ person, onClose }: PersonDetailProps) {
   
   const [editName, setEditName] = useState(person.name);
   const [editRole, setEditRole] = useState(person.role);
-  const [editEmail, setEditEmail] = useState(person.email);
+  const [editEmail, setEditEmail] = useState(person.email || '');
   const [editLevel, setEditLevel] = useState(person.level);
   
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -82,7 +82,7 @@ export function PersonDetail({ person, onClose }: PersonDetailProps) {
   useEffect(() => {
     setEditName(person.name);
     setEditRole(person.role);
-    setEditEmail(person.email);
+    setEditEmail(person.email || '');
     setEditLevel(person.level);
   }, [person.name, person.role, person.email, person.level]);
 
@@ -120,13 +120,7 @@ export function PersonDetail({ person, onClose }: PersonDetailProps) {
   };
   
   const saveEmail = () => {
-    const newEmail = editEmail.trim();
-    if (!newEmail) {
-      // Email is required, reset to current value
-      setEditEmail(person.email);
-      setIsEditingEmail(false);
-      return;
-    }
+    const newEmail = editEmail.trim() || undefined;
     if (newEmail !== person.email) {
       updatePerson(person.id, { email: newEmail });
     }
@@ -285,11 +279,11 @@ export function PersonDetail({ person, onClose }: PersonDetailProps) {
                 onKeyDown={e => {
                   if (e.key === 'Enter') saveEmail();
                   if (e.key === 'Escape') {
-                    setEditEmail(person.email);
+                    setEditEmail(person.email || '');
                     setIsEditingEmail(false);
                   }
                 }}
-                placeholder="Enter email..."
+                placeholder="Add email..."
                 className="edit-email-input"
               />
             </div>
@@ -300,7 +294,7 @@ export function PersonDetail({ person, onClose }: PersonDetailProps) {
               title="Click to edit email"
             >
               <Mail size={14} />
-              {person.email}
+              {person.email || 'Add email...'}
               <Pencil size={12} className="edit-icon" />
             </button>
           )}
