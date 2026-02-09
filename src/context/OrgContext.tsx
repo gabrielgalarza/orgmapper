@@ -279,13 +279,25 @@ function orgReducer(state: OrgState, action: OrgAction): OrgState {
       const team = state.teams[teamId];
       if (!team) return state;
       
-      // Don't delete if it has people
-      if (team.personIds.length > 0) return state;
-      
+      // Remove the team
       const newTeams = { ...state.teams };
       delete newTeams[teamId];
       
-      return { ...state, teams: newTeams };
+      // Remove people who were in this team
+      const newPeople = { ...state.people };
+      const deletedPersonIds = new Set(team.personIds);
+      for (const personId of team.personIds) {
+        delete newPeople[personId];
+      }
+      
+      // Clear reportsTo references to deleted people
+      for (const personId of Object.keys(newPeople)) {
+        if (newPeople[personId].reportsTo && deletedPersonIds.has(newPeople[personId].reportsTo)) {
+          newPeople[personId] = { ...newPeople[personId], reportsTo: undefined };
+        }
+      }
+      
+      return { ...state, teams: newTeams, people: newPeople };
     }
 
     case 'TOGGLE_TEAM_PRODUCT': {
