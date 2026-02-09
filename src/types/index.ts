@@ -36,7 +36,7 @@ export interface Person {
   name: string;
   role: string;
   level: RoleLevel;
-  email?: string;
+  email: string;
   avatar?: string;
   tags: PersonTag[];
   reportsTo?: string; // Person ID

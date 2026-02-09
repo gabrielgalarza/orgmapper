@@ -28,7 +28,10 @@ export function OrgBoard() {
   // Modal states
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [addModalTeam, setAddModalTeam] = useState<TeamId | undefined>();
-  const [selectedPerson, setSelectedPerson] = useState<Person | null>(null);
+  const [selectedPersonId, setSelectedPersonId] = useState<string | null>(null);
+  
+  // Get the current person from context (always up-to-date)
+  const selectedPerson = selectedPersonId ? getPersonById(selectedPersonId) : null;
   
   // New team creation
   const [isCreatingTeam, setIsCreatingTeam] = useState(false);
@@ -83,7 +86,7 @@ export function OrgBoard() {
   };
 
   const handleSelectPerson = (person: Person) => {
-    setSelectedPerson(person);
+    setSelectedPersonId(person.id);
   };
 
   const handleCreateTeam = () => {
@@ -185,7 +188,7 @@ export function OrgBoard() {
       {selectedPerson && (
         <PersonDetail
           person={selectedPerson}
-          onClose={() => setSelectedPerson(null)}
+          onClose={() => setSelectedPersonId(null)}
         />
       )}
     </DndContext>
